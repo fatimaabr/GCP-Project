@@ -1,0 +1,9 @@
+streamlit
+numpy
+pandas
+matplotlib
+flask
+torch
+transformers
+rouge_score
+nltk
