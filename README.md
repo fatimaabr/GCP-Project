@@ -8,7 +8,7 @@ In this guide, we will walk you through how I deployed my **Streamlit app** (whi
 ### a. Create a GCP Project
 
 - First, I created a new **Google Cloud project** via the [Google Cloud Console](https://console.cloud.google.com/).
-- After creating the project, I noted the onyx-etching-450221-s4 because I needed it later.
+- After creating the project, I noted the id-project onyx-etching-450221-s4 because I needed it later.
 
 ### b. Enable Cloud Run and Cloud Build
 
