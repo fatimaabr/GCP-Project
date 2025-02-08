@@ -103,6 +103,7 @@ with open("Dockerfile", "w") as file:
 ![Alt text](cap1.jpeg)
 ![Alt text](cap2.jpeg)
 
+Check also the video 🎥
 
 ## Conclusion
 
