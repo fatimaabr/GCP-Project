@@ -72,7 +72,7 @@ gcloud config set project onyx-etching-450221-s4
 - I built the Docker image of my app and pushed it to **Google Container Registry** (GCR) using:
 
 ```bash
-gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/streamlit-app
+!gcloud builds submit --tag gcr.io/onyx-etching-450221-s4/poem-generator .
 ```
 
 ### c. Deploy to Cloud Run
@@ -80,7 +80,11 @@ gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/streamlit-app
 - Once the image was ready, I deployed it to **Cloud Run** using:
 
 ```bash
-gcloud run deploy streamlit-app   --image gcr.io/YOUR_PROJECT_ID/streamlit-app   --platform managed   --region us-central1   --allow-unauthenticated
+!gcloud run deploy poem-generator \
+  --image gcr.io/onyx-etching-450221-s4/poem-generator \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
 ```
 
 - GCP then provided me with a **public URL** where my app was accessible!
