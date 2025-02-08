@@ -1,7 +1,7 @@
 
 # How to Deploy My Streamlit Poem Generator on GCP
 
-In this guide, we will walk you through how I deployed my **Streamlit app** (which generates poems) to **Google Cloud Platform (GCP)**. The app is built with Python (we used an Two LLMs gpt2 and gpt-neo, and I'm using **Cloud Run** for the deployment. Here are the steps I followed:
+In this guide, we will walk you through how I deployed my **Streamlit app** (which generates poems) to **Google Cloud Platform (GCP)**. The app is built with Python (we used an Two LLMs gpt2 and gpt-neo), and I'm using **Cloud Run** for the deployment. Here are the steps I followed:
 
 ## Step 1: Setting Up GCP
 
