@@ -26,23 +26,25 @@ gcloud services enable cloudbuild.googleapis.com
 - To deploy the app, we wrote a `Dockerfile` that tells GCP how to run my app. Here’s the content of the `Dockerfile`:
 
 ```dockerfile
-# Use the official Python image
-FROM python:3.9
+dockerfile = '''
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy project files
-COPY . .
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Install dependencies
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose Streamlit port
+# Expose port 8501 (default for Streamlit)
 EXPOSE 8501
 
-# Run Streamlit app
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Run the Streamlit app
+CMD ["streamlit", "run", "gcp_app.py"]
+'''
 ```
 
 - This file ensures that the app runs correctly on GCP by installing all necessary dependencies and starting the Streamlit app.
