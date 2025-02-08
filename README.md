@@ -100,8 +100,8 @@ with open("Dockerfile", "w") as file:
 - After the deployment was successful, I visited the URL provided by GCP to see my **poem generator** app live! 😄
 
 ---
-![Alt text](cap1.png)
-![Alt text](cap2.png)
+![Alt text](cap1.jpeg)
+![Alt text](cap2.jpeg)
 
 
 ## Conclusion
