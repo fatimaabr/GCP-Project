@@ -8,7 +8,7 @@ In this guide, we will walk you through how I deployed my **Streamlit app** (whi
 ### a. Create a GCP Project
 
 - First, I created a new **Google Cloud project** via the [Google Cloud Console](https://console.cloud.google.com/).
-- After creating the project, I noted the onyx-etching-450221-s4 because I needed it later.
+- After creating the project, I noted the id-project onyx-etching-450221-s4 because I needed it later.
 
 ### b. Enable Cloud Run and Cloud Build
 
@@ -26,23 +26,25 @@ gcloud services enable cloudbuild.googleapis.com
 - To deploy the app, we wrote a `Dockerfile` that tells GCP how to run my app. Here’s the content of the `Dockerfile`:
 
 ```dockerfile
-# Use the official Python image
-FROM python:3.9
+dockerfile = '''
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy project files
-COPY . .
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Install dependencies
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose Streamlit port
+# Expose port 8501 (default for Streamlit)
 EXPOSE 8501
 
-# Run Streamlit app
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Run the Streamlit app
+CMD ["streamlit", "run", "gcp_app.py"]
+'''
 ```
 
 - This file ensures that the app runs correctly on GCP by installing all necessary dependencies and starting the Streamlit app.
@@ -53,7 +55,7 @@ CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0
 
 ```
 streamlit
-openai  # if using GPT for poem generation
+pandas
 ```
 
 ## Step 3: Build and Deploy the App
@@ -63,8 +65,9 @@ openai  # if using GPT for poem generation
 - I logged into GCP using the following commands:
 
 ```bash
-gcloud auth login
-gcloud config set project onyx-etching-450221-s4
+!gcloud services enable run.googleapis.com
+!gcloud services enable cloudbuild.googleapis.com
+!gcloud config set project onyx-etching-450221-s4
 ```
 
 ### b. Build the Docker Image
@@ -72,6 +75,9 @@ gcloud config set project onyx-etching-450221-s4
 - I built the Docker image of my app and pushed it to **Google Container Registry** (GCR) using:
 
 ```bash
+with open("Dockerfile", "w") as file:
+    file.write(dockerfile)
+
 !gcloud builds submit --tag gcr.io/onyx-etching-450221-s4/poem-generator .
 ```
 
