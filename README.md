@@ -53,7 +53,7 @@ CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0
 
 ```
 streamlit
-openai  # if using GPT for poem generation
+pandas
 ```
 
 ## Step 3: Build and Deploy the App
@@ -63,8 +63,9 @@ openai  # if using GPT for poem generation
 - I logged into GCP using the following commands:
 
 ```bash
-gcloud auth login
-gcloud config set project onyx-etching-450221-s4
+!gcloud services enable run.googleapis.com
+!gcloud services enable cloudbuild.googleapis.com
+!gcloud config set project onyx-etching-450221-s4
 ```
 
 ### b. Build the Docker Image
@@ -72,6 +73,30 @@ gcloud config set project onyx-etching-450221-s4
 - I built the Docker image of my app and pushed it to **Google Container Registry** (GCR) using:
 
 ```bash
+dockerfile = '''
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose port 8501 (default for Streamlit)
+EXPOSE 8501
+
+# Run the Streamlit app
+CMD ["streamlit", "run", "gcp_app.py"]
+'''
+
+# Save the Dockerfile
+with open("Dockerfile", "w") as file:
+    file.write(dockerfile)
+
 !gcloud builds submit --tag gcr.io/onyx-etching-450221-s4/poem-generator .
 ```
 
